@@ -31,19 +31,20 @@
             position: absolute;
             top: 0;
             left: 0;
-            //visibility: hidden;
         
         }
         .card {
+        
+            text-align: center;
             padding: 3px;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
             transition: 0.3s;
-            width: 16em;
+            width: 12em;
             position: absolute;
             left: 5px;
             top: 5px;
             z-index: 1;
-            background: #111;
+            background: #222;
             font-family: monospace;
             font-size: 150%;
             color: #DDD;
@@ -54,12 +55,14 @@
         }
 
         .container {
-            text-align: center;
             padding: 2px 16px;
             
         }
         .card h4 {
           margin: 5px; 
+        }
+        #avatar {
+          width: 100%;
         }
     </style>
   </head>
@@ -68,7 +71,7 @@
     <canvas id="drawing" ></canvas>
 
     <div class="card">
-      <img src="avatar.jpg" alt="Avatar" style="width:100%">
+      <img src="avatar.jpg" alt="Avatar" id="avatar">
       <div class="container">
         <h4><b>burak bilge yalçınkaya</b></h4>
         <a href="https://github.com/bbyalcinkaya" class="fa fa-github-square"></a>
@@ -102,11 +105,11 @@
           brush.r = Math.max(brush.r*0.99999,1);
          
           brush.x += (Math.random()-0.5)*brush.r*0.3;
-          if(Math.random()<0.002 || brush.x<0) brush.x = Math.floor(Math.random()*drawing.width);
+          if(brush.x<0) brush.x = Math.floor(Math.random()*drawing.width);
           else if(brush.x>=drawing.width) brush.x = Math.floor(Math.random()*drawing.width);
           
           brush.y += (Math.random()-0.5)*brush.r*0.3;
-          if(Math.random()<0.002 || brush.y<0) brush.y = Math.floor(Math.random()*drawing.height);
+          if(brush.y<0) brush.y = Math.floor(Math.random()*drawing.height);
           else if(brush.y>=drawing.height) brush.y = Math.floor(Math.random()*drawing.height);
         }
         
