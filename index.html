@@ -106,7 +106,7 @@
             y : Math.floor(Math.random()*drawing.height),
             r : 50,
             c : 0,//color
-            o : 0.03
+            o : 0.01
           });
         }
         
@@ -115,7 +115,7 @@
         }
         function rotate(brush){
           brush.c = piccon.getImageData(brush.x, brush.y, 1, 1).data.slice(0,3); 
-          brush.r = Math.max(brush.r*0.99990,3);
+          brush.r = Math.max(brush.r*0.99995,3);
          
           brush.x += (Math.random()-0.5)*brush.r*0.3;
           if(brush.x<0) brush.x = Math.floor(Math.random()*drawing.width);
