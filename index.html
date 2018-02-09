@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body, html {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+        }
+        canvas, body, html {
+            height: 100%;
+            width: 100%;
+        }
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+        #pic {
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            visibility: hidden;
+        }
+        #drawing {
+            position: absolute;
+            top: 0;
+            left: 0;
+            //visibility: hidden;
+        
+        }
+        .card {
+            padding: 3px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+            transition: 0.3s;
+            width: 16em;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            z-index: 1;
+            background: #111;
+            font-family: monospace;
+            font-size: 150%;
+            color: #DDD;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
+        }
+
+        .container {
+            text-align: center;
+            padding: 2px 16px;
+            
+        }
+        .card h4 {
+          margin: 5px; 
+        }
+    </style>
+  </head>
+  <body>
+    <canvas id="pic" ></canvas>
+    <canvas id="drawing" ></canvas>
+
+    <div class="card">
+      <img src="avatar.jpg" alt="Avatar" style="width:100%">
+      <div class="container">
+        <h4><b>burak bilge yalçınkaya</b></h4>
+        <a href="https://github.com/bbyalcinkaya" class="fa fa-github-square"></a>
+        <a href="https://linkedin/in/bbyalcinkaya" class="fa fa-linkedin-square"></a>
+         
+      </div>
+    </div>
+    <script>
+        var pic = document.getElementById('pic');
+        var piccon = pic.getContext('2d');
+        var drawing = document.getElementById('drawing');
+        var drawcon = drawing.getContext('2d');
+        var picture = new Image();
+        picture.src = 'sunset.jpg';
+        picture.onload = function(){
+            piccon.drawImage(picture,0,0,pic.width,pic.height);
+        };
+
+        var brush = {
+          x : Math.floor(Math.random()*drawing.width),
+          y : Math.floor(Math.random()*drawing.height),
+          r : 15,
+          c : 0,//color
+          o : 0.03
+        };
+        function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        function rotate(brush){
+          brush.c = piccon.getImageData(brush.x, brush.y, 1, 1).data.slice(0,3); 
+          brush.r = Math.max(brush.r*0.99999,1);
+         
+          brush.x += (Math.random()-0.5)*brush.r*0.3;
+          if(Math.random()<0.002 || brush.x<0) brush.x = Math.floor(Math.random()*drawing.width);
+          else if(brush.x>=drawing.width) brush.x = Math.floor(Math.random()*drawing.width);
+          
+          brush.y += (Math.random()-0.5)*brush.r*0.3;
+          if(Math.random()<0.002 || brush.y<0) brush.y = Math.floor(Math.random()*drawing.height);
+          else if(brush.y>=drawing.height) brush.y = Math.floor(Math.random()*drawing.height);
+        }
+        
+        function put(brush, dur){
+          rotate(brush);
+          drawcon.fillStyle = 'rgba('+ brush.c.join(',') +','+brush.o+')';
+          drawcon.beginPath();
+          drawcon.arc(brush.x,brush.y,brush.r, 0, 2*Math.PI, false);
+          drawcon.fill();
+          drawcon.closePath();
+        }
+        async function draw(){
+          brush.r = 50;
+          brush.o = 0.01;
+          while(1){
+            rotate(brush);
+            put(brush);
+            await sleep(1);
+          }
+        }
+        draw();
+     
+    </script>
+  </body>
+</html>
