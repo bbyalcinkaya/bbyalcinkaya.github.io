@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Hello!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body, html {
@@ -40,14 +41,14 @@
             padding: 3px;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
             transition: 0.3s;
-            width: 12em;
+            width: 10em;
             position: absolute;
             left: 5px;
             top: 5px;
             z-index: 1;
             background: #222;
             font-family: monospace;
-            font-size: 150%;
+            font-size: 120%;
             color: #DDD;
         }
 
@@ -83,67 +84,42 @@
       </div>
     </div>
     <script>
-        document.getElementById("mailto").href = "ma"
-                                               + "ilto:"
-                                               + "bby" + "alc" + "ink"
-                                               + "aya" + "@" + "gmail"
-                                               + ".com";
-        
-        var pic = document.getElementById('pic');
-        var piccon = pic.getContext('2d');
-        var drawing = document.getElementById('drawing');
-        var drawcon = drawing.getContext('2d');
-        var picture = new Image();
-        picture.src = 'sunset.jpg';
-        picture.onload = function(){
-            piccon.drawImage(picture,0,0,pic.width,pic.height);
-        };
+        var curves, seed;
 
-        var brushes=[];
-        for(var i=0; i<1; i++){
-          brushes.push({
-            x : Math.floor(Math.random()*drawing.width),
-            y : Math.floor(Math.random()*drawing.height),
-            r : 50,
-            c : 0,//color
-            o : 0.01
-          });
+        function setup() {
+          cnv = createCanvas(windowWidth, windowHeight);
+          cnv.id("cool_canvas");  
+          seed = random(987654321);
+          frameRate(20);
         }
-        
-        function sleep(ms) {
-          return new Promise(resolve => setTimeout(resolve, ms));
+        function windowResized() {
+          //resizeCanvas(windowWidth, windowHeight);
         }
-        function rotate(brush){
-          brush.c = piccon.getImageData(brush.x, brush.y, 1, 1).data.slice(0,3); 
-          brush.r = Math.max(brush.r*0.99995,3);
-         
-          brush.x += (Math.random()-0.5)*brush.r*0.3;
-          if(brush.x<0) brush.x = Math.floor(Math.random()*drawing.width);
-          else if(brush.x>=drawing.width) brush.x = Math.floor(Math.random()*drawing.width);
+        function draw(){
+          randomSeed(seed);
+          background(0);
+          noStroke();
+          translate(width/2, height/2);
           
-          brush.y += (Math.random()-0.5)*brush.r*0.3;
-          if(brush.y<0) brush.y = Math.floor(Math.random()*drawing.height);
-          else if(brush.y>=drawing.height) brush.y = Math.floor(Math.random()*drawing.height);
-        }
-        
-        function put(brush, dur){
-          rotate(brush);
-          drawcon.fillStyle = 'rgba('+ brush.c.join(',') +','+brush.o+')';
-          drawcon.beginPath();
-          drawcon.arc(brush.x,brush.y,brush.r, 0, 2*Math.PI, false);
-          drawcon.fill();
-          drawcon.closePath();
-        }
-        async function draw(){
-          while(1){
-            for(var i=0; i<brushes.length; i++){
-              rotate(brushes[i]);
-              put(brushes[i]);
+          var r = min(width,height);
+          var maxdep = 20;
+          for(var dep=0; dep<maxdep; dep++){
+            rotate(sin(frameCount/200)*0.04*dep);
+            var tris = 20;
+            var t = random(5, 10);
+            for(var i=0; i<tris; i++){
+              fill(random(156),random(156),random(156),40);
+              arc(0,0
+                ,abs(cos(HALF_PI+frameCount/600*dep))*r
+                ,abs(sin(HALF_PI+frameCount/600*dep))*r
+                ,i*TWO_PI/tris,(i+1)*TWO_PI/tris);
             }
-            await sleep(1);
+            fill(0);
+            r -= random(5,100);
           }
         }
-        draw();
+  
+
      
     </script>
   </body>
