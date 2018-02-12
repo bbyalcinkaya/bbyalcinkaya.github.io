@@ -91,32 +91,43 @@
           cnv = createCanvas(windowWidth, windowHeight);
           cnv.id("cool_canvas");  
           seed = random(987654321);
-          frameRate(20);
+          frameRate(30);
+          blendMode(ADD);
         }
         function windowResized() {
           //resizeCanvas(windowWidth, windowHeight);
         }
         function draw(){
           randomSeed(seed);
+          
+          blendMode(BLEND);
           background(0);
+          
+          blendMode(ADD);
           noStroke();
           translate(width/2, height/2);
           
           var r = min(width,height);
-          var maxdep = 20;
+          var maxdep = 40;
           for(var dep=0; dep<maxdep; dep++){
             rotate(sin(frameCount/200)*0.04*dep);
             var tris = 20;
             var t = random(5, 10);
-            for(var i=0; i<tris; i++){
-              fill(random(156),random(156),random(156),40);
-              arc(0,0
+            for(var i=0; i<1; i++){
+              fill(random(150,180), 120, random(150,180),15);
+              /*arc(0,0
                 ,abs(cos(HALF_PI+frameCount/600*dep))*r
                 ,abs(sin(HALF_PI+frameCount/600*dep))*r
                 ,i*TWO_PI/tris,(i+1)*TWO_PI/tris);
+              */
+              ellipse(0,0,
+                abs(cos(HALF_PI+frameCount/600*dep))*r
+                ,abs(sin(HALF_PI+frameCount/600*dep))*r
+              );
             }
+            
             fill(0);
-            r -= random(5,100);
+            r *= 0.97;
           }
         }
   
