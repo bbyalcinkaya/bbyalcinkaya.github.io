@@ -89,8 +89,8 @@
           for(var dep=0; dep<maxdep; dep++, r *= 0.97){
             rotate(sin(frameCount/200)*0.04*dep);
             ellipse(0,0,
-              /*abs(cos(HALF_PI+frameCount/600*dep))**/r
-              ,abs(sin(HALF_PI+frameCount/600*dep))*r
+              /*cos(HALF_PI+frameCount/600*dep)**/r
+              ,sin(HALF_PI+frameCount/600*dep)*r
             );
           }
         }
