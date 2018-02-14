@@ -69,21 +69,13 @@
       </div>
     </div>
     <script>
-        var curves, seed;
-
         function setup() {
           cnv = createCanvas(windowWidth, windowHeight);
           cnv.id("cool_canvas");  
-          seed = random(987654321);
           frameRate(30);
           blendMode(ADD);
         }
-        function windowResized() {
-          //resizeCanvas(windowWidth, windowHeight);
-        }
         function draw(){
-          randomSeed(seed);
-          
           blendMode(BLEND);
           background(0);
           
@@ -93,25 +85,12 @@
           
           var r = min(width,height);
           var maxdep = 40;
-          for(var dep=0; dep<maxdep; dep++){
+          for(var dep=0; dep<maxdep; dep++, r *= 0.97){
             rotate(sin(frameCount/200)*0.04*dep);
-            var tris = 20;
-            var t = random(5, 10);
-            for(var i=0; i<1; i++){
-              fill(random(150,180), 120, random(150,180),15);
-              /*arc(0,0
-                ,abs(cos(HALF_PI+frameCount/600*dep))*r
-                ,abs(sin(HALF_PI+frameCount/600*dep))*r
-                ,i*TWO_PI/tris,(i+1)*TWO_PI/tris);
-              */
-              ellipse(0,0,
-                abs(cos(HALF_PI+frameCount/600*dep))*r
-                ,abs(sin(HALF_PI+frameCount/600*dep))*r
-              );
-            }
-            
-            fill(0);
-            r *= 0.97;
+            ellipse(0,0,
+              /*abs(cos(HALF_PI+frameCount/600*dep))**/r
+              ,abs(sin(HALF_PI+frameCount/600*dep))*r
+            );
           }
         }
   
