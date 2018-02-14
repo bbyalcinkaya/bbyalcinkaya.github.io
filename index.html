@@ -87,10 +87,10 @@
           var r = min(width,height);
           var maxdep = 40;
           for(var dep=0; dep<maxdep; dep++, r *= 0.97){
-            rotate(sin(frameCount/200)*0.04*dep);
-            ellipse(0,0,
-              /*cos(HALF_PI+frameCount/600*dep)**/r
+            rotate(sin(frameCount/50)*HALF_PI/maxdep);
+            ellipse(0,0
               ,sin(HALF_PI+frameCount/600*dep)*r
+              ,/*cos(HALF_PI+frameCount/600*dep)**/r
             );
           }
         }
