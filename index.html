@@ -7,13 +7,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body, html {
+        body, html, canvas {
             position: absolute;
             top: 0;
             left: 0;
             margin: 0;
-        }
-        canvas, body, html {
+            padding: 0; 
             height: 100%;
             width: 100%;
         }
@@ -69,37 +68,6 @@
         
       </div>
     </div>
-    <script>
-        
-        var particles;
-        function setup() {
-          var cnv = createCanvas(windowWidth, windowHeight);
-          cnv.id("cool_canvas");
-          colorMode(HSB,360,100,100);
-          background(0,0,0);
-          strokeWeight(15);
-          particles = min(width, height) / 2;
-        }
-        function draw(){
-          translate(width/2, height/2);
-  
-          // FADE
-          fill(0,0.1);
-          noStroke();
-          rect(-width/2, -height/2, width, height);
-          noFill();
-
-          for(var i=0; i<particles ; i++){
-            stroke(360*i/particles, 50, 100, 0.05);
-            point(
-              i*cos((particles-i-1)*frameCount/2000.0),
-              i*sin((particles-i-1)*frameCount/2000.0)
-            );
-          }
-        } 
-  
-
-     
-    </script>
+    <script src="http://bbyalcinkaya.xyz/algorithmic-drawing/rainbow-reversed/sketch.js"></script>
   </body>
 </html>
